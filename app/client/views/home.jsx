@@ -6,6 +6,7 @@ var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
 var BaseForm = require('../components/base_form.jsx');
 var FormGroup = require('../components/form_group.jsx');
+var HomeStore = require('../stores/home_store');
 
 module.exports = React.createClass({
   componentWillMount: function() {
