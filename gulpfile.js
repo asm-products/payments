@@ -1,13 +1,10 @@
 var browserify = require('browserify');
 var gulp = require('gulp');
+var less = require('gulp-less');
 var nib = require('nib');
+var nodemon = require('gulp-nodemon');
 var path = require('path');
 var source = require('vinyl-source-stream');
-var stylus = require('gulp-stylus');
-
-var server = require('./app/server');
-
-var app;
 
 gulp.task('browserify', function() {
   // The React(ify) magic happens in the package.json
@@ -32,27 +29,36 @@ gulp.task('browserify', function() {
   return bundle();
 });
 
-gulp.task('stylus', function() {
-  gulp.src('./public/styl/**/*.styl')
-    .pipe(stylus({ use: [nib()] }))
+gulp.task('less', function() {
+  gulp.src('./public/less/style.less')
+    .pipe(less({
+      paths: [ path.resolve(__dirname, 'node_modules/bootstrap/less') ]
+    }))
     .pipe(gulp.dest('./public/css'));
-});
-
-gulp.task('serve', function() {
-  app = server.listen(process.env.PORT || 8080);
-});
-
-gulp.task('close', function() {
-  app.close();
 });
 
 gulp.task('watch', function() {
   global.isWatching = true;
 
   gulp.watch('./app/client/style.styl', ['stylus']);
-  gulp.watch('./app/server/**/*.js', ['close', 'serve']);
   gulp.watch('./app/client/**/*.jsx', ['browserify']);
 });
 
-gulp.task('build', ['browserify', 'stylus']);
-gulp.task('default', ['watch', 'build', 'serve']);
+gulp.task('demon', function() {
+  nodemon({
+    script: 'index.js',
+    nodeArgs: ['--harmony'],
+    ext: 'js',
+    env: {
+      'NODE_ENV': 'development'
+    },
+    ignore: [
+      './node_modules/**',
+      './test/**',
+      './app/client/**'
+    ]
+  });
+});
+
+gulp.task('build', ['browserify', 'less']);
+gulp.task('default', ['build', 'watch', 'demon']);

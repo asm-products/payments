@@ -1,6 +1,5 @@
 var koa = require('koa');
 var compress = require('koa-compress');
-var hbs = require('koa-hbs');
 var locals = require('koa-locals');
 var logger = require('koa-logger');
 var path = require('path');
@@ -20,15 +19,10 @@ app.use(serve(path.resolve(__dirname, '../..', 'node_modules/jquery/dist')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/js')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/css')));
 app.use(compress());
-app.use(hbs.middleware({ viewPath: path.resolve(__dirname, 'templates') }));
 
 locals(app, {
   assemblyRoot: 'https://assembly.com',
   title: 'Assembly Payments'
-});
-
-app.use(function *() {
-  yield this.render('index', this.locals);
 });
 
 routes(app);

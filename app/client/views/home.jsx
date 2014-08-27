@@ -54,7 +54,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div style={{ 'margin-right': 'auto' }} className="col-xl-4 col-xs-12">
+      <div style={{ 'margin-right': 'auto' }} className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
         <BaseForm onSubmit={this.onSubmit} buttonText="Submit">
           <FormGroup error={this.state.errors.email}>
             <label className="control-label">Email address</label>
