@@ -41,10 +41,6 @@ function _stopDispatching() {
 
 var Dispatcher = {
   dispatch: function(payload) {
-    if (_.isEmpty(_callbacks)) {
-      return;
-    }
-
     if (this.isDispatching()) {
       console.warn('Cannot dispatch in the middle of another dispatch');
       return;
@@ -58,7 +54,7 @@ var Dispatcher = {
           continue;
         }
 
-        _invokeCallback(id)
+        _invokeCallback(id);
       }
     } finally {
       _stopDispatching();

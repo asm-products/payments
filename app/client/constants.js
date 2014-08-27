@@ -1,5 +1,7 @@
 module.exports = {
+  CHANGE_EVENT: 'change',
+
   HOME: {
-    SUMBMIT: 'home:submit'
+    SUBMIT: 'home:submit'
   }
 };

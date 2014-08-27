@@ -1,10 +1,13 @@
-var koa = require('koa');
 var compress = require('koa-compress');
+var dotenv = require('dotenv');
+var koa = require('koa');
 var locals = require('koa-locals');
 var logger = require('koa-logger');
 var path = require('path');
 var router = require('koa-router');
 var serve = require('koa-static');
+
+dotenv.load();
 
 var app = koa();
 var routes = require(path.resolve(__dirname, 'routes'));
@@ -22,7 +25,8 @@ app.use(compress());
 
 locals(app, {
   assemblyRoot: 'https://assembly.com',
-  title: 'Assembly Payments'
+  title: 'Assembly Payments',
+  publishableKey: process.env.STRIPE_PUBLISHABLE
 });
 
 routes(app);

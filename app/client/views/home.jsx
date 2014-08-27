@@ -5,6 +5,7 @@ var React = require('react');
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
 var BaseForm = require('../components/base_form.jsx');
+var Flash = require('../components/flash.jsx');
 var FormGroup = require('../components/form_group.jsx');
 var HomeStore = require('../stores/home_store');
 
@@ -54,7 +55,8 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div style={{ 'margin-right': 'auto' }} className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+      <div style={{ 'margin-right': 'auto' }} className="col-xs-12">
+        <Flash message={this.state.message} />
         <BaseForm onSubmit={this.onSubmit} buttonText="Submit">
           <FormGroup error={this.state.errors.email}>
             <label className="control-label">Email address</label>
