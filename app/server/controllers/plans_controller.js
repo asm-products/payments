@@ -1,8 +1,6 @@
 var crypto = require('crypto');
-var request = require('co-request');
-var thunk = require('thunkify');
-var render = require('../lib/render');
 var stripe = require('stripe')(process.env.STRIPE_SECRET);
+var handleError = require('../lib/error');
 var Plan = require('../models/plan');
 
 module.exports = {
@@ -15,6 +13,7 @@ module.exports = {
         var plan = plans[i];
 
         ret.push({
+          name: plan.name,
           stripe_id: plan.stripe_id,
           product_id: plan.product_id
         });
@@ -59,8 +58,11 @@ module.exports = {
    */
 
   update: function *(next) {
+    this.accepts('application/json');
     try {
-      this.body = yield updateStripePlan(this.params.plan, this.request.body);
+      var stripePlan = yield updateStripePlan(this.params.plan, this.request.body);
+
+      this.body = yield updatePlan(stripePlan);
     } catch (e) {
       handleError.call(this, e);
     }
@@ -68,7 +70,11 @@ module.exports = {
 
   destroy: function *(next) {
     try {
-      this.body = yield deleteStripePlan(this.params.plan);
+      var stripeId = this.params.plan;
+
+      deletePlan(stripeId);
+
+      this.body = yield deleteStripePlan(stripeId);
     } catch (e) {
       handleError.call(this, e);
     }
@@ -103,7 +109,18 @@ function *savePlan(stripePlan, product) {
   });
 }
 
-function handleError(e) {
-  this.status = e.status || 500;
-  this.body = e.message;
+function *updatePlan(stripePlan) {
+  return yield Plan.update(
+    {
+      stripe_id: stripePlan.id
+    },
+
+    {
+      name: stripePlan.name
+    }
+  ).exec();
+}
+
+function deletePlan(id) {
+  Plan.find({ stripe_id: id }).remove().exec();
 }

@@ -7,11 +7,17 @@ module.exports = function(app) {
 
   // /products[/:product]
   var products = new Resource('products', controllers.products);
-  app.use(products.middleware());
 
   // /products/:product/plans[/:plan]
   var plans = new Resource('plans', controllers.plans);
-  products.add(plans);
 
+  // /products/:product/customers[/:customer]
+  var customers = new Resource('customers', controllers.customers);
+
+  products.add(plans);
+  products.add(customers);
+
+  app.use(products.middleware());
   app.use(plans.middleware());
+  app.use(customers.middleware());
 };

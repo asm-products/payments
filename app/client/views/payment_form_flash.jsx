@@ -24,12 +24,14 @@ module.exports = React.createClass({
       });
     }
 
-    this.setState({
-      alertClass: 'success',
-      message: 'Payment sent for processing',
-      style: {
-        visibility: 'visible'
-      }
-    });
+    if (HomeStore.paymentSubmitted()) {
+      this.setState({
+        alertClass: 'success',
+        message: 'Payment sent for processing',
+        style: {
+          visibility: 'visible'
+        }
+      });
+    }
   }
 });

@@ -1,4 +1,4 @@
-var xhr = {
+module.exports = {
   get: function(path, callback) {
     this.request('GET', path, null, callback);
   },
@@ -27,14 +27,16 @@ var xhr = {
     request.open(method, path, true);
     request.setRequestHeader('X-CSRF-Token', token);
     request.setRequestHeader('Accept', 'application/json');
-    request.setRequestHeader("Content-type", "application/json");
+    request.setRequestHeader('Content-Type', 'application/json');
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
-        return callback(null, request.responseText);
+        return callback(null, JSON.parse(request.responseText));
       }
 
       callback(new Error(request.responseText));
     }
+
+    request.send(JSON.stringify(data));
   }
 };

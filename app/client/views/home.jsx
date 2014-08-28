@@ -12,10 +12,16 @@ var HomeStore = require('../stores/home_store');
 module.exports = React.createClass({
   componentDidMount: function() {
     HomeStore.addChangeListener(this.handleStoreResponse);
+
+    Dispatcher.dispatch({
+      action: CONSTANTS.HOME.PLANS,
+      data: document.location + '/plans'
+    });
   },
 
   formData: function() {
     return {
+      plan: this.state.plan || this.state.plans[0].stripe_id,
       email: this.state.email,
       cardNumber: this.state.cardNumber,
       expirationMonth: this.state.expirationMonth,
@@ -26,17 +32,16 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      errors: {},
-      email: 'foo@bar.com',
-      cardNumber: '4242424242424242',
-      expirationMonth: '11',
-      expirationYear: '2017',
-      cvc: '123'
+      errors: {}
     };
   },
 
   handleStoreResponse: function(response) {
-    // handle errors, etc.
+    this.setState({
+      plans: HomeStore.getPlans()
+    });
+
+    this.plans();
   },
 
   onChange: function(property) {
@@ -58,6 +63,28 @@ module.exports = React.createClass({
     });
   },
 
+  plans: function() {
+    var plans = this.state.plans;
+
+    if (!plans || plans.length === 0) {
+      return;
+    }
+
+    var ret = [];
+
+    for (var i = 0, l = plans.length; i < l; i++) {
+      var plan = plans[i];
+
+      ret.push(
+        <option value={plan.stripe_id} key={'plan-' + i}>
+          {document.getElementById('product-name').innerHTML + ' - ' +plan.name}
+        </option>
+      );
+    }
+
+    return ret;
+  },
+
   render: function() {
     return (
       <div style={{ 'margin-right': 'auto' }} className="col-xs-12">
@@ -65,6 +92,16 @@ module.exports = React.createClass({
           <Flash message={this.state.message} />
         </div>
         <BaseForm onSubmit={this.onSubmit} buttonText="Submit">
+          <FormGroup error={this.state.errors.plan}>
+            <label className="control-label">Plan</label>
+            <select
+                className="form-control"
+                value={this.state.plan}
+                onChange={this.onChange('plan')}>
+              {this.plans()}
+            </select>
+          </FormGroup>
+
           <FormGroup error={this.state.errors.email}>
             <label className="control-label">Email address</label>
             <input

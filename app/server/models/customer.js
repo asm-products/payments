@@ -3,13 +3,17 @@ var request = require('co-request');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var PlanSchema = new Schema({
+var CustomerSchema = new Schema({
   created_at: {
     type: Date,
     default: Date.now
   },
 
-  name: String,
+  email: {
+    type: String,
+    required: true,
+    index: true
+  },
 
   product_id: {
     type: String,
@@ -24,4 +28,4 @@ var PlanSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Plan', PlanSchema);
+module.exports = mongoose.model('Customer', CustomerSchema);

@@ -31,11 +31,11 @@ app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/js')
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/css')));
 app.use(compress());
 // app.use(csrf.middleware); // TODO: Validate incoming requests; issue user tokens
-// app.use(function *(next) {
-//   this.locals.csrf = this.csrf;
+app.use(function *(next) {
+  this.locals.csrf = this.csrf;
 
-//   yield next;
-// });
+  yield next;
+});
 
 locals(app, {
   assemblyRoot: 'https://assembly.com',
@@ -45,7 +45,7 @@ locals(app, {
 
 routes(app);
 
-// csrf(app);
+csrf(app);
 
 app.listen(process.env.PORT || 8000);
 
