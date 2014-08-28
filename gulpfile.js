@@ -62,7 +62,7 @@ gulp.task('watch', function() {
   global.isWatching = true;
 
   gulp.watch('./public/less/**/*.less', ['less']);
-  gulp.watch('./app/client/**/*.jsx', ['browserify']);
+  gulp.watch('./app/client/**', ['browserify']);
 });
 
 gulp.task('demon', function() {
@@ -74,9 +74,10 @@ gulp.task('demon', function() {
       'NODE_ENV': 'development'
     },
     ignore: [
-      './node_modules/**',
-      './test/**',
-      './app/client/**'
+      'node_modules/**',
+      'test/**',
+      'app/client/**',
+      'public/**'
     ]
   })
   .on('error', onError);

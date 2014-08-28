@@ -5,3 +5,4 @@ exports.index = function *(next) {
 };
 
 exports.products = require('./products_controller');
+exports.plans = require('./plans_controller');

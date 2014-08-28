@@ -5,12 +5,12 @@ var React = require('react');
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
 var BaseForm = require('../components/base_form.jsx');
-var Flash = require('../components/flash.jsx');
+var Flash = require('./payment_form_flash.jsx');
 var FormGroup = require('../components/form_group.jsx');
 var HomeStore = require('../stores/home_store');
 
 module.exports = React.createClass({
-  componentWillMount: function() {
+  componentDidMount: function() {
     HomeStore.addChangeListener(this.handleStoreResponse);
   },
 
@@ -26,7 +26,12 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      errors: {}
+      errors: {},
+      email: 'foo@bar.com',
+      cardNumber: '4242424242424242',
+      expirationMonth: '11',
+      expirationYear: '2017',
+      cvc: '123'
     };
   },
 
@@ -56,7 +61,9 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div style={{ 'margin-right': 'auto' }} className="col-xs-12">
-        <Flash message={this.state.message} />
+        <div style={{'margin-bottom': '10px'}}>
+          <Flash message={this.state.message} />
+        </div>
         <BaseForm onSubmit={this.onSubmit} buttonText="Submit">
           <FormGroup error={this.state.errors.email}>
             <label className="control-label">Email address</label>
