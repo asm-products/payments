@@ -3,6 +3,11 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var PlanSchema = new Schema({
+  amount: {
+    type: Number,
+    required: true
+  },
+
   created_at: {
     type: Date,
     default: Date.now

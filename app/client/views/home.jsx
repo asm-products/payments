@@ -77,12 +77,16 @@ module.exports = React.createClass({
 
       ret.push(
         <option value={plan.stripe_id} key={'plan-' + i}>
-          {document.getElementById('product-name').innerHTML + ' - ' +plan.name}
+          {plan.name + ' - ' + this.price(plan.amount)}
         </option>
       );
     }
 
     return ret;
+  },
+
+  price: function(amount) {
+    return '$' + (amount / 100).toFixed(2);
   },
 
   render: function() {

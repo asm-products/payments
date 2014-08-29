@@ -16,7 +16,8 @@ module.exports = {
         ret.push({
           name: plan.name,
           stripe_id: plan.stripe_id,
-          product_id: plan.product_id
+          product_id: plan.product_id,
+          amount: plan.amount
         });
       }
 
@@ -102,6 +103,7 @@ function *getPlans(product) {
 
 function *savePlan(stripePlan, product) {
   return yield Plan.create({
+    amount: stripePlan.amount,
     name: stripePlan.name,
     product_id: product,
     stripe_id: stripePlan.id
@@ -116,6 +118,10 @@ function *updatePlan(stripePlan) {
 
     {
       name: stripePlan.name
+    },
+
+    {
+      amount: stripePlan.amount
     }
   ).exec();
 }
