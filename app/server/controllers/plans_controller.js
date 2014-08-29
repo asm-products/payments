@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var stripe = require('stripe')(process.env.STRIPE_SECRET);
 var handleError = require('../lib/error');
+var planPermissions = require('../lib/plan_permissions');
 var Plan = require('../models/plan');
 
 module.exports = {
@@ -25,23 +26,23 @@ module.exports = {
     }
   },
 
-  create: function *(next) {
-    this.accepts('application/json');
+  create: [planPermissions, function *(next) {
+      this.accepts('application/json');
 
-    var body = this.request.body;
+      var body = this.request.body;
 
-    body.id = crypto.randomBytes(10).toString('base64');
-    body.currency = body.currency || 'usd';
+      body.id = crypto.randomBytes(10).toString('base64');
+      body.currency = body.currency || 'usd';
 
-    try {
-      var stripePlan = yield createStripePlan(body);
-      var plan = yield savePlan(stripePlan, this.params.product);
+      try {
+        var stripePlan = yield createStripePlan(body);
+        var plan = yield savePlan(stripePlan, this.params.product);
 
-      this.body = { stripe_plan_id: plan.stripe_id };
-    } catch (e) {
-      handleError.call(this, e);
-    }
-  },
+        this.body = { stripe_plan_id: plan.stripe_id };
+      } catch (e) {
+        handleError.call(this, e);
+      }
+    }],
 
   show: function *(next) {
     try {
@@ -57,28 +58,28 @@ module.exports = {
    * Stripe: "Other plan details (price, interval, etc.) are, by design, not editable."
    */
 
-  update: function *(next) {
-    this.accepts('application/json');
-    try {
-      var stripePlan = yield updateStripePlan(this.params.plan, this.request.body);
+  update: [planPermissions, function *(next) {
+      this.accepts('application/json');
+      try {
+        var stripePlan = yield updateStripePlan(this.params.plan, this.request.body);
 
-      this.body = yield updatePlan(stripePlan);
-    } catch (e) {
-      handleError.call(this, e);
-    }
-  },
+        this.body = yield updatePlan(stripePlan);
+      } catch (e) {
+        handleError.call(this, e);
+      }
+    }],
 
-  destroy: function *(next) {
-    try {
-      var stripeId = this.params.plan;
+  destroy: [planPermissions, function *(next) {
+      try {
+        var stripeId = this.params.plan;
 
-      deletePlan(stripeId);
+        deletePlan(stripeId);
 
-      this.body = yield deleteStripePlan(stripeId);
-    } catch (e) {
-      handleError.call(this, e);
-    }
-  }
+        this.body = yield deleteStripePlan(stripeId);
+      } catch (e) {
+        handleError.call(this, e);
+      }
+    }]
 };
 
 function *retrieveStripePlan(id) {

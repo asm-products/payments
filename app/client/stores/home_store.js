@@ -100,7 +100,8 @@ function _handleStripeToken(formData) {
 function _processPayment(formData) {
   var data = {
     email: formData.email,
-    card: formData.token
+    card: formData.token,
+    plan: formData.plan
   };
 
   paymentSubmitted = true;

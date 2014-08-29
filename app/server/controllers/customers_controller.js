@@ -5,12 +5,12 @@ var handleError = require('../lib/error');
 module.exports = {
   create: function *(next) {
     this.accepts('application/json');
-    var body = this.request.body;
 
+    var body = this.request.body;
     var customer = yield Customer.findOne({ email: body.email }).exec();
 
     if (customer) {
-      // updateCustomer
+      return this.body = yield updateStripeCustomer(customer.stripe_id, body);
     }
 
     try {
@@ -18,27 +18,48 @@ module.exports = {
 
       this.body = yield saveCustomer(stripeCustomer, this.params.product);
     } catch (e) {
-      console.error(e);
       handleError.call(this, e);
     }
   },
 
   show: function *(next) {
-
+    try {
+      this.body = yield retrieveStripeCustomer(this.params.customer);
+    } catch (e) {
+      handleError.call(this, e);
+    }
   },
 
   update: function *(next) {
     this.accepts('application/json');
 
+    var customerId = body.customer_id;
+
+    delete body.customer_id;
+
+    try {
+      this.body = yield updateStripeCustomer(customerId, body);
+    } catch (e) {
+      handleError.call(this, e);
+    }
   },
 
   destroy: function *(next) {
-
+    try {
+      deleteCustomer(customerId);
+      this.body = yield deleteStripeCustomer(this.params.customer);
+    } catch (e) {
+      handleError.call(this, e);
+    }
   }
 };
 
 function *createStripeCustomer(body) {
   return yield stripe.customers.create(body);
+}
+
+function *updateStripeCustomer(id, body) {
+  return yield stripe.customers.update(id, body);
 }
 
 function *saveCustomer(stripeCustomer, product) {
@@ -47,4 +68,16 @@ function *saveCustomer(stripeCustomer, product) {
     product_id: product,
     stripe_id: stripeCustomer.id
   });
+}
+
+function *retrieveStripeCustomer(customerId) {
+  return yield stripe.customers.retrieve(customerId);
+}
+
+function deleteCustomer(customerId) {
+  Customer.find({ stripe_id: customerId }).remove().exec();
+}
+
+function *deleteStripeCustomer(customerId) {
+  return yield stripe.customers.del(customerId);
 }

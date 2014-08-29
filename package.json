@@ -9,7 +9,8 @@
     ]
   },
   "scripts": {
-    "start": "node --harmony `which gulp`",
+    "gulp": "node --harmony `which gulp`",
+    "start": "node --harmony index.js",
     "test": "mocha -r"
   },
   "repository": {
