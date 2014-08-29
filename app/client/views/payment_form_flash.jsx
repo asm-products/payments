@@ -17,7 +17,7 @@ module.exports = React.createClass({
     if (errors.length > 0) {
       return this.setState({
         alertClass: 'danger',
-        message: errors[0],
+        message: errors[0].message,
         style: {
           visibility: 'visible'
         }

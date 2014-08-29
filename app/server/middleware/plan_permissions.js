@@ -1,12 +1,16 @@
 var request = require('co-request');
-var handleError = require('./error');
+var handleError = require('../lib/error');
 
 module.exports = function *planPermissions(next) {
   var slug = this.params.product;
   var token = this.request.header['authentication-token'];
-  var result = yield request(
-    process.env.ASSEMBLY_API + 'products/' + slug + '/core_team.json?token=' + token
-  );
+  var result = yield request({
+    uri: process.env.ASSEMBLY_API + 'products/' + slug + '/core_team?token=' + token,
+    headers: {
+      'content-type': 'application/json',
+      'accept': 'application/json'
+    }
+  });
 
   try {
     var authorized = JSON.parse(result.body).authorized;

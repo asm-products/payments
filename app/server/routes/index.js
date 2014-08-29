@@ -1,6 +1,6 @@
 var Resource = require('koa-resource-router');
 
-var controllers = require('../controllers'));
+var controllers = require('../controllers');
 var acceptJson = require('../middleware/accept_json');
 
 module.exports = function(app) {

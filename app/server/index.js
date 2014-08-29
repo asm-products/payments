@@ -30,7 +30,8 @@ app.use(serve(path.resolve(__dirname, '../..', 'node_modules/jquery/dist')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/js')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/css')));
 app.use(compress());
-// app.use(csrf.middleware); // TODO: Validate incoming requests; issue user tokens
+
+csrf(app);
 app.use(function *(next) {
   this.locals.csrf = this.csrf;
 
@@ -44,8 +45,6 @@ locals(app, {
 });
 
 routes(app);
-
-csrf(app);
 
 app.listen(process.env.PORT || 8000);
 
