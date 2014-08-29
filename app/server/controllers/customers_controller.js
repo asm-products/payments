@@ -4,8 +4,6 @@ var handleError = require('../lib/error');
 
 module.exports = {
   create: function *(next) {
-    this.accepts('application/json');
-
     var body = this.request.body;
     var customer = yield Customer.findOne({ email: body.email }).exec();
 
@@ -31,8 +29,6 @@ module.exports = {
   },
 
   update: function *(next) {
-    this.accepts('application/json');
-
     var customerId = body.customer_id;
 
     delete body.customer_id;

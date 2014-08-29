@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var request = require('co-request');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 

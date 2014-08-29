@@ -1,6 +1,7 @@
-var path = require('path');
 var Resource = require('koa-resource-router');
-var controllers = require(path.resolve(__dirname, '..', 'controllers'));
+
+var controllers = require('../controllers'));
+var acceptJson = require('../middleware/accept_json');
 
 module.exports = function(app) {
   app.get('/', controllers.index);
@@ -9,10 +10,10 @@ module.exports = function(app) {
   var products = new Resource('products', controllers.products);
 
   // /products/:product/plans[/:plan]
-  var plans = new Resource('plans', controllers.plans);
+  var plans = new Resource('plans', acceptJson, controllers.plans);
 
   // /products/:product/customers[/:customer]
-  var customers = new Resource('customers', controllers.customers);
+  var customers = new Resource('customers', acceptJson, controllers.customers);
 
   products.add(plans);
   products.add(customers);
