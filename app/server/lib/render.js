@@ -5,5 +5,5 @@ module.exports = views(path.resolve(__dirname, '..', 'templates'), {
   map: {
     html: 'swig'
   },
-  cache: false
+  cache: 'memory'
 });
