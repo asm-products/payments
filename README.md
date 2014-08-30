@@ -1,6 +1,8 @@
 payments
 ========
 
+[![Build Status](https://travis-ci.org/asm-products/payments.svg)](https://travis-ci.org/asm-products/payments)
+
 Assembly payments: open and awesome
 
 ### Getting Started

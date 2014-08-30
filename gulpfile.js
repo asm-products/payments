@@ -2,8 +2,6 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
-var nib = require('nib');
-var nodemon = require('gulp-nodemon');
 var path = require('path');
 var source = require('vinyl-source-stream');
 
@@ -66,6 +64,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('demon', function() {
+  var nodemon = require('gulp-nodemon');
+
   nodemon({
     script: 'index.js',
     nodeArgs: ['--harmony'],

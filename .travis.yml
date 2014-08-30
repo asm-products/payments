@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- '0.11'
+deploy:
+  provider: heroku
+  api_key:
+    secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
+  app: asm-payments
+  on:
+    repo: asm-products/payments
