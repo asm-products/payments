@@ -35,7 +35,7 @@ This route requires the Assembly authentication token of a core team member of t
 HTTP/1.1 POST /products/{PRODUCT_ID}/plans
 ```
 
-##### EXAMPLE
+###### EXAMPLE
 
 ```
 curl -X POST -H "Authorization: {USER_TOKEN}" /products/helpful/plans \
