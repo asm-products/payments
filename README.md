@@ -80,7 +80,7 @@ curl -X PUT -H "Authorization: {USER_TOKEN}" /products/helpful/plans/zxAf2yU893 
 
 This route requires the Assembly authentication token of a core team member of the product in the `Authorization` header.
 
-####### DEFINITION
+###### DEFINITION
 
 ```
 HTTP/1.1 DELETE /products/{PRODUCT_ID}/plans/{PLAN_ID}
