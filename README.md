@@ -57,7 +57,7 @@ HTTP/1.1 PUT /products/{PRODUCT_ID}/plans/{PLAN_ID}
 
 # EXAMPLE
 curl -X PUT -H "Authorization: {USER_TOKEN}" /products/helpful/plans/zxAf2yU893 \
-    -d name=Grown \
+    -d name=Grown
 ```
 
 ##### Delete a plan
