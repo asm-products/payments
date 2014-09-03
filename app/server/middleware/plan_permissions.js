@@ -3,7 +3,7 @@ var handleError = require('../lib/error');
 
 module.exports = function *planPermissions(next) {
   var slug = this.params.product;
-  var token = this.request.header['authentication-token'];
+  var token = this.get('Authorization');
   var result = yield request({
     uri: process.env.ASSEMBLY_API + 'products/' + slug + '/core_team?token=' + token,
     headers: {

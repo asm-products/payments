@@ -4,6 +4,8 @@ var handleError = require('../lib/error');
 var planPermissions = require('../middleware/plan_permissions');
 var Plan = require('../models/plan');
 
+var ID_POSSIBILITIES = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-';
+
 module.exports = {
   index: function *(next) {
     try {
@@ -30,8 +32,9 @@ module.exports = {
   create: [planPermissions, function *(next) {
     var body = this.request.body;
 
-    body.id = crypto.randomBytes(10).toString('base64');
+    body.id = body.id || createId();
     body.currency = body.currency || 'usd';
+    body.interval = body.interval || 'month';
 
     try {
       var stripePlan = yield createStripePlan(body);
@@ -58,7 +61,6 @@ module.exports = {
    */
 
   update: [planPermissions, function *(next) {
-
     try {
       var stripePlan = yield updateStripePlan(this.params.plan, this.request.body);
 
@@ -128,4 +130,14 @@ function *updatePlan(stripePlan) {
 
 function deletePlan(id) {
   Plan.find({ stripe_id: id }).remove().exec();
+}
+
+function createId() {
+  var id = '';
+
+  for (var i = 0; i < 10; i++) {
+    id += ID_POSSIBILITIES.charAt(Math.floor(Math.random() * ID_POSSIBILITIES.length));
+  }
+
+  return id;
 }
