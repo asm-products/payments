@@ -5,7 +5,7 @@ module.exports = function *planPermissions(next) {
   var slug = this.params.product;
   var token = this.get('Authorization');
   var result = yield request({
-    uri: process.env.ASSEMBLY_API + 'products/' + slug + '/core_team?token=' + token,
+    uri: process.env.ASSEMBLY_API + '/products/' + slug + '/core_team?token=' + token,
     headers: {
       'content-type': 'application/json',
       'accept': 'application/json'

@@ -1,6 +1,7 @@
 var stripe = require('stripe')(process.env.STRIPE_SECRET);
 var csrf = require('koa-csrf');
 var Customer = require('../models/customer');
+var planPermissions = require('../middleware/plan_permissions');
 var handleError = require('../lib/error');
 
 module.exports = {
@@ -16,6 +17,14 @@ module.exports = {
       var stripeCustomer = yield createStripeCustomer(body);
 
       this.body = yield saveCustomer(stripeCustomer, this.params.product);
+    } catch (e) {
+      handleError.call(this, e);
+    }
+  }],
+
+  index: [planPermissions, function *(next) {
+    try {
+      this.body = yield Customer.find({ product_id: this.params.product }).exec();
     } catch (e) {
       handleError.call(this, e);
     }
