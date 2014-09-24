@@ -1,11 +1,10 @@
 var stripe = require('stripe')(process.env.STRIPE_SECRET);
-var csrf = require('koa-csrf');
 var Customer = require('../models/customer');
 var planPermissions = require('../middleware/plan_permissions');
 var handleError = require('../lib/error');
 
 module.exports = {
-  create: [csrf.middleware, function *(next) {
+  create: function *(next) {
     var body = this.request.body;
     var customer = yield Customer.findOne({ email: body.email }).exec();
 
@@ -20,7 +19,7 @@ module.exports = {
     } catch (e) {
       handleError.call(this, e);
     }
-  }],
+  },
 
   index: [planPermissions, function *(next) {
     try {
@@ -38,7 +37,7 @@ module.exports = {
     }
   },
 
-  update: [csrf.middleware, function *(next) {
+  update: function *(next) {
     var customerId = body.customer_id;
 
     delete body.customer_id;
@@ -48,7 +47,7 @@ module.exports = {
     } catch (e) {
       handleError.call(this, e);
     }
-  }],
+  },
 
   destroy: function *(next) {
     try {

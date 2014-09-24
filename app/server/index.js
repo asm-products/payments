@@ -1,6 +1,6 @@
 var compress = require('koa-compress');
-var csrf = require('koa-csrf');
 var dotenv = require('dotenv');
+var favicon = require('koa-favicon');
 var jsonBody = require('koa-parse-json');
 var koa = require('koa');
 var locals = require('koa-locals');
@@ -23,6 +23,7 @@ if (process.env.NODE_ENV !== 'test') {
 app.keys = [process.env.SESSION_SECRET];
 
 app.use(session());
+app.use(favicon(path.resolve(__dirname, '../..', 'public/favicon.ico')));
 app.use(jsonBody());
 app.use(router(app));
 app.use(serve(path.resolve(__dirname, '../..', 'public')));
@@ -30,13 +31,6 @@ app.use(serve(path.resolve(__dirname, '../..', 'node_modules/jquery/dist')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/js')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/css')));
 app.use(compress());
-
-csrf(app);
-app.use(function *(next) {
-  this.locals.csrf = this.csrf;
-
-  yield next;
-});
 
 locals(app, {
   assemblyRoot: 'https://assembly.com',
