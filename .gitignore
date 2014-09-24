@@ -32,4 +32,5 @@ node_modules
 
 npm-debug.log
 public/css
+public/js
 .env

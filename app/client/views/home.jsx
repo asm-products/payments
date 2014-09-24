@@ -13,10 +13,12 @@ module.exports = React.createClass({
   componentDidMount: function() {
     HomeStore.addChangeListener(this.handleStoreResponse);
 
-    Dispatcher.dispatch({
-      action: CONSTANTS.HOME.PLANS,
-      data: document.location + '/plans'
-    });
+    if (document.location.pathname !== '/') {
+      Dispatcher.dispatch({
+        action: CONSTANTS.HOME.PLANS,
+        data: document.location + '/plans'
+      });
+    }
   },
 
   formData: function() {
