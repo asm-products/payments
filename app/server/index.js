@@ -10,6 +10,10 @@ var router = require('koa-router');
 var serve = require('koa-static');
 var session = require('koa-session');
 
+if (process.env.NODE_ENV !== 'production') {
+  // process.env.MONGOHQ_URL = 'mongodb://localhost/payments-' + process.env.NODE_ENV;
+}
+
 dotenv.load();
 
 var app = koa();

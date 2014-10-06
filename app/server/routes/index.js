@@ -15,10 +15,15 @@ module.exports = function(app) {
   // /products/:product/customers[/:customer]
   var customers = new Resource('customers', acceptJson, controllers.customers);
 
+  // /products/:product/customers/:customer/subscriptions[/:subscription]
+  var subscriptions = new Resource('subscriptions', acceptJson, controllers.subscriptions);
+
   products.add(plans);
   products.add(customers);
+  customers.add(subscriptions);
 
   app.use(products.middleware());
   app.use(plans.middleware());
   app.use(customers.middleware());
+  app.use(subscriptions.middleware());
 };

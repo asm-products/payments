@@ -12,7 +12,7 @@
     "gulp": "node --harmony `which gulp`",
     "postinstall": "node --harmony `which gulp` build",
     "start": "node --harmony index.js",
-    "test-server": "NODE_ENV=test mocha --harmony --recursive"
+    "test": "NODE_ENV=test mocha --harmony --recursive"
   },
   "repository": {
     "type": "git",

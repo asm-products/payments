@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
 
 var CustomerSchema = new Schema({
   created_at: {
