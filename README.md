@@ -105,7 +105,7 @@ curl -X POST -H "Authorization: {USER_TOKEN}" /products/helpful/plans \
 
 Response:
 
-'''
+```
 201 Created
 {
   "stripe_plan_id": "slug_product_plan"
