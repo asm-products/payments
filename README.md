@@ -48,7 +48,7 @@ If you created the given customer with a default card, the above will work just 
 
 That's it. You can update and cancel subscriptions as necessary by following the principles outlined above.
 
-### API, or Fine, here are some more details.
+### API, or More details, please
 
 #### Products
 
