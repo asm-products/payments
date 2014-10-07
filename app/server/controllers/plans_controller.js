@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var stripe = require('stripe')(process.env.STRIPE_SECRET);
+var stripe = require('../lib/stripe');
 var handleError = require('../lib/error');
 var planPermissions = require('../middleware/plan_permissions');
 var Plan = require('../models/plan');
@@ -32,7 +32,7 @@ module.exports = {
   create: [planPermissions, function *(next) {
     var body = this.request.body;
 
-    body.id = body.id || createId();
+    body.id = this.params.product + '_' + (body.id || createId());
     body.currency = body.currency || 'usd';
     body.interval = body.interval || 'month';
 

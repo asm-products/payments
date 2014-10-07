@@ -5,7 +5,16 @@ payments
 
 Assembly payments: open and awesome
 
+## Table of Contents
+
+- [Quick Start](#quick-start-or-what-do-i-do-now)
+- [API](#api-or-more-details-please)
+    - [Products](#products)
+    - [Plans](#plans)
+    - [Customers](#customers)
+
 ### Quick Start, or What do I do now?
+
 
 If you're looking to implement Assembly Payments into you're app, you're probably a core team member, right? If not, you're gonna need to be: Assembly Payments requires a core team member's authentication token to validate most requests.
 
@@ -18,7 +27,14 @@ curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/plans \
   -d '{ "id": "product_plan", "name": "Product Plan",  "amount": 1000, "interval": "month" }'
 ```
 
-You should provide _at least_ all of the above information in the request body, but you can also pass along any of the fields allowed by Stripe. (All right, you don't _need_ to send `interval` if it's `month` &mdash; we'll give you that default.) Note that the plan's `id` needs to be unique across all Assembly products; we recommend prefixing it with your product's name.
+You should provide _at least_ all of the above information in the request body, but you can also pass along any of the fields allowed by Stripe. (All right, you don't _need_ to send `interval` if it's `month` &mdash; we'll give you that default.) Note that each plan's `id` needs to be unique, and that we automatically prefix the `id` with the product's slug &mdash; the complete `id` is returned as `stripe_plan_id` when successfully created, e.g:
+
+'''
+201 Created
+{
+  "stripe_plan_id": "slug_product_plan"
+}
+```
 
 Right now, we only support subscriptions. That might change in the future, but for now the main consequence is that you need to create a [Stripe Customer](https://stripe.com/docs/api/node#customers) for each of your users, e.g.:
 
@@ -48,7 +64,12 @@ If you created the given customer with a default card, the above will work just 
 
 That's it. You can update and cancel subscriptions as necessary by following the principles outlined above.
 
+
+
+
 ### API, or More details, please
+
+
 
 #### Products
 
@@ -56,17 +77,25 @@ That's it. You can update and cancel subscriptions as necessary by following the
 
 ###### EXAMPLE
 
+Request:
+
 ```
 curl /products/helpful
 ```
+
+Response:
+
+A generic payment portal filled in with your product's description and available plans.
 
 #### Plans
 
 ##### Create a plan
 
-This route requires the Assembly authentication token of a core team member of the product in the `Authorization` header.
+This route requires the product's authentication token (available to core team members on the product's idea page) in the `Authorization` header.
 
 ###### EXAMPLE
+
+Request:
 
 ```
 curl -X POST -H "Authorization: {USER_TOKEN}" /products/helpful/plans \
@@ -74,21 +103,54 @@ curl -X POST -H "Authorization: {USER_TOKEN}" /products/helpful/plans \
     -d '{ "name": "Growing" "amount": 5000 }'
 ```
 
+Response:
+
+'''
+201 Created
+{
+  "stripe_plan_id": "slug_product_plan"
+}
+```
+
 ##### Get a plan
 
 ###### EXAMPLE
+
+Request:
 
 ```
 curl /products/{PRODUCT_ID}/plans/{PLAN_ID}
 ```
 
+Response (identical to the [response given by Stripe](https://stripe.com/docs/api/node#retrieve_plan)):
+
+```
+{
+  "interval": "month",
+  "name": "Product Plan",
+  "created": 1404363125,
+  "amount": 20000,
+  "currency": "usd",
+  "id": "slug_product_plan",
+  "object": "plan",
+  "livemode": false,
+  "interval_count": 1,
+  "trial_period_days": null,
+  "metadata": {
+  },
+  "statement_description": null
+}
+```
+
 ##### Update a plan
 
-This route requires the Assembly authentication token of a core team member of the product in the `Authorization` header.
+This route requires the product's authentication token (available to core team members on the product's idea page) in the `Authorization` header.
 
 You can only change the name of an existing plan. If other details need to be changed, you'll need to delete the current plan and recreate it with the updated details.
 
 ###### EXAMPLE
+
+Request:
 
 ```
 curl -X PUT -H "Authorization: {USER_TOKEN}" /products/{PRODUCT_ID}/plans/{PLAN_ID} \
@@ -96,17 +158,54 @@ curl -X PUT -H "Authorization: {USER_TOKEN}" /products/{PRODUCT_ID}/plans/{PLAN_
     -d '{ "name": "Grown" }'
 ```
 
+Resonse (identical to the [response given by Stripe](https://stripe.com/docs/api/node#update_plan)):
+
+```
+{
+  "interval": "month",
+  "name": "New Product Plan",
+  "created": 1404363125,
+  "amount": 20000,
+  "currency": "usd",
+  "id": "slug_product_plan",
+  "object": "plan",
+  "livemode": false,
+  "interval_count": 1,
+  "trial_period_days": null,
+  "metadata": {
+  },
+  "statement_description": null
+}
+
 ##### Delete a plan
 
-This route requires the Assembly authentication token of a core team member of the product in the `Authorization` header.
+This route requires the product's authentication token (available to core team members on the product's idea page) in the `Authorization` header.
 
 ###### EXAMPLE
+
+Request:
 
 ```
 curl -X DELETE -H "Authorization: {USER_TOKEN}" /products/{PRODUCT_ID}/plans/{PLAN_ID}
 ```
 
+Response (identical to the [response given by Stripe](https://stripe.com/docs/api/node#delete_plan)):
+
+```
+{
+  "deleted": true,
+  "id": "slug_product_plan"
+}
+```
+
+
+
+
 #### Customers
+
+These routes require the product's authentication token (available to core team members on the product's idea page) in the `Authorization` header.
+
+The responses are identical to [those provided by Stripe](https://stripe.com/docs/api/node#customers).
 
 ##### Create a customer
 

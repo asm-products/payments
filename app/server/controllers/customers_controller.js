@@ -1,7 +1,7 @@
-var stripe = require('stripe')(process.env.STRIPE_SECRET);
 var Customer = require('../models/customer');
 var planPermissions = require('../middleware/plan_permissions');
 var handleError = require('../lib/error');
+var stripe = require('../lib/stripe');
 
 module.exports = {
   create: function *(next) {

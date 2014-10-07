@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var stripe = require('stripe')(process.env.STRIPE_SECRET);
+var stripe = require('../lib/stripe');
 var handleError = require('../lib/error');
 var planPermissions = require('../middleware/plan_permissions');
 var Plan = require('../models/plan');
