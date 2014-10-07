@@ -398,12 +398,27 @@ curl -X PUT /products/{PRODUCT_ID}/customers/{CUSTOMER_ID} \
     -d '{ "quantity": "5" }'
 ```
 
-###### Destroy a customer
+Response:
+
+(As with `create`, but with the updated fields changed.)
+
+##### Destroy a customer
 
 ###### EXAMPLE:
 
+Request:
+
 ```
 curl -X DELETE /products/{PRODUCT_ID}/customers/{CUSTOMER_ID}
+```
+
+Response:
+
+```
+{
+  "deleted": true,
+  "id": "{CUSTOMER_ID}"
+}
 ```
 
 ### Contributing, or How you can make Payments better
