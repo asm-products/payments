@@ -29,7 +29,7 @@ curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/plans \
 
 You should provide _at least_ all of the above information in the request body, but you can also pass along any of the fields allowed by Stripe. (All right, you don't _need_ to send `interval` if it's `month` &mdash; we'll give you that default.) Note that each plan's `id` needs to be unique, and that we automatically prefix the `id` with the product's slug &mdash; the complete `id` is returned as `stripe_plan_id` when successfully created, e.g:
 
-'''
+```
 201 Created
 {
   "stripe_plan_id": "slug_product_plan"
