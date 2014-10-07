@@ -176,6 +176,7 @@ Resonse (identical to the [response given by Stripe](https://stripe.com/docs/api
   },
   "statement_description": null
 }
+```
 
 ##### Delete a plan
 
@@ -197,7 +198,6 @@ Response (identical to the [response given by Stripe](https://stripe.com/docs/ap
   "id": "slug_product_plan"
 }
 ```
-
 
 
 
