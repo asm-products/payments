@@ -18,7 +18,7 @@ Assembly payments: open and awesome
 
 If you're looking to implement Assembly Payments into you're app, you're probably a core team member, right? If not, you're gonna need to be: Assembly Payments requires a core team member's authentication token to validate most requests.
 
-With that out of the way, you're going to need to create a couple of plans. This is mostly like [create a plan on Stripe](https://stripe.com/docs/api/node#create_plan), except you create your plan through the Payments API. For example:
+With that out of the way, you're going to need to create a couple of plans. This is mostly like [creating a plan on Stripe](https://stripe.com/docs/api/node#create_plan), except you create your plan through the Payments API. For example:
 
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/plans \
@@ -297,6 +297,41 @@ Response:
     "type":"Visa"
   }
 }
+```
+
+##### List all customers
+
+Note that this returns the Payments API's version of your customers, not Stripe's version. The most important piece of information, the customers' Stripe IDs, is in the `stripe_id` field on each object.
+
+###### EXAMPLE
+
+Request:
+
+```
+curl /products/{PRODUCT_ID}/custoemrs
+```
+
+Response:
+
+```
+[
+  {
+    "_id":"53ff6de612486a16123e8857",
+    "email":"foo@bar.com",
+    "product_id":"meta",
+    "stripe_id":"cus_4fswXj3zOlnwEr",
+    "__v":0,
+    "created_at":"2014-08-28T17:59:02.708Z"
+  },
+  {
+    "_id":"543323431f1b4dd2c4b7630f",
+    "email":"stripe_test@asm.co",
+    "product_id":"meta",
+    "stripe_id":"cus_4uZuRZ4KFE0hOF",
+    "__v":0,
+    "created_at":"2014-10-06T23:18:27.304Z"
+  }
+]
 ```
 
 ##### Retrieve a customer
