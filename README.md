@@ -13,8 +13,8 @@ With that out of the way, you're going to need to create a couple of plans. This
 
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/plans \
-  --header "content-type: application/json" \
-  --header "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "content-type: application/json" \
+  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
   -d '{ "id": "product_plan", "name": "Product Plan",  "amount": 1000, "interval": "month" }'
 ```
 
@@ -24,8 +24,8 @@ Right now, we only support subscriptions. That might change in the future, but f
 
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/customers \
-  --header "content-type: application/json" \
-  --header "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "content-type: application/json" \
+  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
   -d '{ "email": "an_awesome_customer@yourapp.com" }'
 ```
 
@@ -37,8 +37,8 @@ Finally, you're ready to create a subscription &mdash; this is how you get money
 
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/customers/{CUSTOMER_ID}/subscriptions \
-  --header "content-type: application/json" \
-  --header "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "content-type: application/json" \
+  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
   -d '{ "plan": "product_plan" }'
 ```
 
