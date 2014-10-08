@@ -26,7 +26,6 @@ describe('customers_controller', function() {
       stripe.customers.create.restore();
     });
 
-    // There is a lot to stub here
     it('creates and saves a customer', function(done) {
       supertest(app.listen())
         .post('/products/test_product/customers')
