@@ -8,8 +8,11 @@ cache:
   - node_modules
 deploy:
   provider: heroku
+  strategy: git
   api_key:
     secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
-  app: asm-payments
+  app:
+    product: asm-payments
+    sandbox: asm-payments-sandbox
   on:
     repo: asm-products/payments
