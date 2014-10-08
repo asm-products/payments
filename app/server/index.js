@@ -11,7 +11,7 @@ var serve = require('koa-static');
 var session = require('koa-session');
 
 if (process.env.NODE_ENV !== 'production') {
-  // process.env.MONGOHQ_URL = 'mongodb://localhost/payments-' + process.env.NODE_ENV;
+  process.env.MONGOHQ_URL = 'mongodb://localhost/payments-' + process.env.NODE_ENV;
 }
 
 dotenv.load();
@@ -19,7 +19,6 @@ dotenv.load();
 var app = koa();
 var routes = require(path.resolve(__dirname, 'routes'));
 var db = require(path.resolve(__dirname, '../..', 'db'));
-var stripeKey = require(path.resolve(__dirname, 'middleware/stripe_key'));
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger());
@@ -36,7 +35,6 @@ app.use(serve(path.resolve(__dirname, '../..', 'node_modules/jquery/dist')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/js')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/bootstrap/dist/css')));
 app.use(compress());
-app.use(stripeKey);
 
 locals(app, {
   assemblyRoot: 'https://assembly.com',

@@ -5,9 +5,15 @@ cache:
   directories:
   - node_modules
 deploy:
-  provider: heroku
-  api_key:
-    secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
-  app: asm-payments
-  on:
-    repo: asm-products/payments
+  - provider: heroku
+    api_key:
+      secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
+    app: asm-payments
+    on:
+      repo: asm-products/payments
+  - provider: heroku
+    api_key:
+      secure: uHOqjWjVP8T2U6X6cCfes5xtc9G1G+x1kLc4OdPHMS2jQhIsWqaVp1pGrY5lw+svDERWO0Doxeub9FdSacUX6kA881OiDb/i1tiuDCPAyOz1eW21fxVvXcY1UisXVGDR0njtzasMS/lf4sjb/ztn7hec0VxcSQlmsc+nf7MEtyo=
+    app: asm-payments-sandbox
+    on:
+      repo: asm-products/payments
