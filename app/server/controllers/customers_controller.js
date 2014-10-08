@@ -15,6 +15,7 @@ module.exports = {
     try {
       var stripeCustomer = yield createStripeCustomer(body);
 
+      this.status = 201;
       this.body = yield saveCustomer(stripeCustomer, this.params.product);
     } catch (e) {
       handleError.call(this, e);
