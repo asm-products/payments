@@ -80,8 +80,9 @@ That's it. You can update and cancel subscriptions as necessary by following the
 Request:
 
 ```
-curl /products/helpful
+curl /products/{PRODUCT_ID}
 ```
+`{PRODUCT_ID}` Should be replaced with your products unique name, for example the `{PRODUCT_ID}` for Assembly Meta is `meta`.
 
 Response:
 
@@ -98,7 +99,7 @@ This route requires the product's authentication token (available to core team m
 Request:
 
 ```
-curl -X POST -H "Authorization: {USER_TOKEN}" /products/helpful/plans \
+curl -X POST -H "Authorization: {USER_TOKEN}" /products/{PRODUCT_ID}/plans \
     -H "Content-Type: application/json" \
     -d '{ "name": "Growing" "amount": 5000 }'
 ```
@@ -214,7 +215,7 @@ The responses are identical to [those provided by Stripe](https://stripe.com/doc
 Request:
 
 ```
-curl -X POST /products/meta/customers \
+curl -X POST /products/{PRODUCT_ID}/customers \
     -H "Content-Type: application/json" \
     -H "Authorization: {AUTH_TOKEN}" \
     -d '{ "email": "{CUSTOMER_EMAIL}", "card": "{STRIPE_CARD_TOKEN}" }'
