@@ -10,7 +10,7 @@ module.exports = {
     try {
       var result = yield createStripeSubscription(this.params.customer, this.request.body);
       var plan = yield Plan.findOne({ stripe_id: result.plan.id }).exec();
-      console.log(plan)
+
       var subscription = yield Subscription.create({
         plan: plan._id,
         product_id: this.params.product,
