@@ -431,7 +431,6 @@ Request:
 curl -X PUT /products/{PRODUCT_ID}/customers/{CUSTOMER_ID} \
     -H "Content-Type: application/json" \
     -H "Authorization: {AUTH_TOKEN} \
-    -d '{ "quantity": "5" }'
 ```
 
 Response:

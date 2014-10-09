@@ -4,7 +4,7 @@ var handleError = require('../lib/error');
 var stripe = require('../lib/stripe');
 
 module.exports = {
-  create: function *(next) {
+  create: [planPermissions, function *(next) {
     var body = this.request.body;
     var customer = yield Customer.findOne({ email: body.email }).exec();
 
@@ -20,7 +20,7 @@ module.exports = {
     } catch (e) {
       handleError.call(this, e);
     }
-  },
+  }],
 
   index: [planPermissions, function *(next) {
     try {
@@ -30,15 +30,15 @@ module.exports = {
     }
   }],
 
-  show: function *(next) {
+  show: [planPermissions, function *(next) {
     try {
       this.body = yield retrieveStripeCustomer(this.params.customer);
     } catch (e) {
       handleError.call(this, e);
     }
-  },
+  }],
 
-  update: function *(next) {
+  update: [planPermissions, function *(next) {
     var customerId = body.customer_id;
 
     delete body.customer_id;
@@ -48,16 +48,16 @@ module.exports = {
     } catch (e) {
       handleError.call(this, e);
     }
-  },
+  }],
 
-  destroy: function *(next) {
+  destroy: [planPermissions, function *(next) {
     try {
       deleteCustomer(customerId);
       this.body = yield deleteStripeCustomer(this.params.customer);
     } catch (e) {
       handleError.call(this, e);
     }
-  }
+  }]
 };
 
 function *createStripeCustomer(body) {
