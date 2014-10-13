@@ -663,8 +663,11 @@ Response (identical to [Stripe's response](https://stripe.com/docs/api#update_su
 
 ### Contributing, or How you can make Payments better
 
-First, fork this repository. Then
+First, fork this repository. Make sure you're running mongodb. Then
 
 1. `git clone git@github.com:YOU/payments.git && cd payments`
 2. `npm install`
+3. `npm install -g gulp`
 3. `gulp`
+
+http://localhost:8000
