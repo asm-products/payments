@@ -18,12 +18,17 @@ module.exports = function(app) {
   // /products/:product/customers/:customer/subscriptions[/:subscription]
   var subscriptions = new Resource('subscriptions', acceptJson, controllers.subscriptions);
 
+  // /products/:product/charges
+  var charges = new Resource('charges', acceptJson, controllers.charges);
+
   products.add(plans);
   products.add(customers);
+  products.add(charges);
   customers.add(subscriptions);
 
   app.use(products.middleware());
   app.use(plans.middleware());
+  app.use(charges.middleware());
   app.use(customers.middleware());
   app.use(subscriptions.middleware());
 };

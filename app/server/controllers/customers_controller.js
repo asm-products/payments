@@ -8,15 +8,16 @@ module.exports = {
     var body = this.request.body;
     var customer = yield Customer.findOne({ email: body.email }).exec();
 
-    if (customer) {
-      return this.body = yield updateStripeCustomer(customer.stripe_id, body);
-    }
-
     try {
+      if (customer) {
+        return (this.body = yield updateStripeCustomer(customer.stripe_id, body));
+      }
+
       var stripeCustomer = yield createStripeCustomer(body);
+      customer = yield saveCustomer(stripeCustomer, this.params.product);
 
       this.status = 201;
-      this.body = yield saveCustomer(stripeCustomer, this.params.product);
+      this.body = stripeCustomer;
     } catch (e) {
       handleError.call(this, e);
     }

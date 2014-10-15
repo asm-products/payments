@@ -12,15 +12,16 @@ module.exports = function *planPermissions(next) {
     }
   });
 
+  var authorized;
   try {
-    var authorized = JSON.parse(result.body).authorized;
+    authorized = JSON.parse(result.body).authorized;
   } catch (e) {
     handleError.call(this, e);
   }
 
   if (!authorized) {
     this.response.status = 401;
-    return this.body = "401 Unauthorized";
+    return (this.body = "401 Unauthorized");
   }
 
   yield next;
