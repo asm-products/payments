@@ -1,0 +1,63 @@
+{
+  "object": "list",
+  "url": "/v1/charges",
+  "has_more": false,
+  "data": [
+    {
+      "id": "ch_14nG8y2eZvKYlo2C1kjaD56E",
+      "object": "charge",
+      "created": 1413234856,
+      "livemode": false,
+      "paid": true,
+      "amount": 1898,
+      "currency": "usd",
+      "refunded": false,
+      "card": {
+        "id": "card_14nG8v2eZvKYlo2CmFtsyamB",
+        "object": "card",
+        "last4": "4242",
+        "brand": "Visa",
+        "funding": "credit",
+        "exp_month": 9,
+        "exp_year": 2019,
+        "fingerprint": "Xt5EWLLDS7FJjR1c",
+        "country": "US",
+        "name": "virtumedix+aaabbbb@gmail.com",
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "customer": "cus_4xATip9Egg6QVZ"
+      },
+      "captured": true,
+      "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/charges/ch_14nG8y2eZvKYlo2C1kjaD56E/refunds",
+        "data": [
+
+        ]
+      },
+      "balance_transaction": "txn_14mc8w2eZvKYlo2Cs3KpvvCO",
+      "failure_message": null,
+      "failure_code": null,
+      "amount_refunded": 0,
+      "customer": "cus_4xATip9Egg6QVZ",
+      "invoice": null,
+      "description": "Charge for VirtuMedix consultation",
+      "dispute": null,
+      "metadata": {
+      },
+      "statement_description": null,
+      "receipt_email": null,
+      "receipt_number": null,
+      "shipping": null
+    }
+  ]
+}

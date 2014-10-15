@@ -28,15 +28,12 @@ describe('customers_controller', function() {
       sinon.stub(coRequest, 'get', function *() {
         var auth = JSON.stringify({ authorized: true });
         return yield { body: auth };
-      })
-      // sinon.stub(planPermissions, 'authorization', function *(next) {
-      //   yield next;
-      // });
+      });
     });
 
     after(function() {
       stripe.customers.create.restore();
-      // planPermissions.authorization.restore();
+      coRequest.get.restore();
     });
 
     it('creates and saves a customer', function(done) {

@@ -1,5 +1,6 @@
 module.exports = function handleError(e) {
   this.status = e.status || 500;
+  console.error(e);
 
   switch (e.type) {
     case 'StripeInvalidRequestError':
@@ -14,6 +15,27 @@ module.exports = function handleError(e) {
     case 'StripeAuthenticationError':
       this.body = 'There was an issue authenticating with Stripe.';
       break;
+    case 'InvalidCustomer':
+      // I propose we output JSON error messages
+      this.body = {
+        "error": {
+          "type": "invalid_request_error",
+          "message": "No such customer: " + this.params.customer,
+          "param": "customer"
+        }
+      };
+      break;
+    case 'InvalidCharge':
+      // I propose we output JSON error messages
+      this.body = {
+        "error": {
+          "type": "invalid_request_error",
+          "message": "No such charge: " + this.params.charge,
+          "param": "charge"
+        }
+      };
+      break;
+
     default:
       this.body = e.message;
       break;

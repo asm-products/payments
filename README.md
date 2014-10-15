@@ -38,7 +38,7 @@ You should provide _at least_ all of the above information in the request body, 
 }
 ```
 
-Right now, we only support subscriptions. That might change in the future, but for now the main consequence is that you need to create a [Stripe Customer](https://stripe.com/docs/api/node#customers) for each of your users, e.g.:
+You need to create a [Stripe Customer](https://stripe.com/docs/api/node#customers) for each of your users, e.g.:
 
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/customers \
@@ -659,6 +659,150 @@ Response (identical to [Stripe's response](https://stripe.com/docs/api#update_su
 }
 ```
 
+#### Charges
+
+Charges are a resource defined on a product: `/products/:product/charges[/:charge]`. You'll need to supply your authorization token in the `Authorization` header with each request.
+
+##### Create a charge
+
+Request:
+
+```
+curl -X POST /products/{PRODUCT_ID}/charges \
+    -H "Content-Type: application/json" \
+    -H "Authorization: {AUTH_TOKEN} \
+    -d '{ "customer": "{CUSTOMER_ID}", "amount": 4995, "currency": "usd" }'
+```
+
+Response (identical to [Stripe's response](https://stripe.com/docs/api#create_charge)):
+
+```
+{
+  "id": "ch_14nhWi2eZvKYlo2CALgw84Ij",
+  "object": "charge",
+  "created": 1413340116,
+  "livemode": false,
+  "paid": true,
+  "amount": 500,
+  "currency": "usd",
+  "refunded": false,
+  "card": {
+    "id": "card_14nhWi2eZvKYlo2CPkyq6EiI",
+    "object": "card",
+    "last4": "4242",
+    "brand": "Visa",
+    "funding": "credit",
+    "exp_month": 1,
+    "exp_year": 2050,
+    "fingerprint": "Xt5EWLLDS7FJjR1c",
+    "country": "US",
+    "name": null,
+    "address_line1": null,
+    "address_line2": null,
+    "address_city": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_country": null,
+    "cvc_check": "pass",
+    "address_line1_check": null,
+    "address_zip_check": null,
+    "customer": null
+  },
+  "captured": true,
+  "refunds": {
+    "object": "list",
+    "total_count": 0,
+    "has_more": false,
+    "url": "/v1/charges/ch_14nhWi2eZvKYlo2CALgw84Ij/refunds",
+    "data": [
+
+    ]
+  },
+  "balance_transaction": "txn_14lX9L2eZvKYlo2CJiJ36Emh",
+  "failure_message": null,
+  "failure_code": null,
+  "amount_refunded": 0,
+  "customer": null,
+  "invoice": null,
+  "description": null,
+  "dispute": null,
+  "metadata": {
+  },
+  "statement_description": null,
+  "receipt_email": null,
+  "receipt_number": null,
+  "shipping": null
+}
+```
+
+##### Retrieve a charge
+
+```
+curl /products/{PRODUCT_ID}/charges/{CHARGE_ID} \
+    -H "Content-Type: application/json" \
+    -H "Authorization: {AUTH_TOKEN}
+```
+
+Response (identical to [Stripe's response](https://stripe.com/docs/api#retrieve_charge)):
+
+```
+{
+  "id": "ch_14nhWi2eZvKYlo2CALgw84Ij",
+  "object": "charge",
+  "created": 1413340116,
+  "livemode": false,
+  "paid": true,
+  "amount": 500,
+  "currency": "usd",
+  "refunded": false,
+  "card": {
+    "id": "card_14nhWi2eZvKYlo2CPkyq6EiI",
+    "object": "card",
+    "last4": "4242",
+    "brand": "Visa",
+    "funding": "credit",
+    "exp_month": 1,
+    "exp_year": 2050,
+    "fingerprint": "Xt5EWLLDS7FJjR1c",
+    "country": "US",
+    "name": null,
+    "address_line1": null,
+    "address_line2": null,
+    "address_city": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_country": null,
+    "cvc_check": "pass",
+    "address_line1_check": null,
+    "address_zip_check": null,
+    "customer": null
+  },
+  "captured": true,
+  "refunds": {
+    "object": "list",
+    "total_count": 0,
+    "has_more": false,
+    "url": "/v1/charges/ch_14nhWi2eZvKYlo2CALgw84Ij/refunds",
+    "data": [
+
+    ]
+  },
+  "balance_transaction": "txn_14lX9L2eZvKYlo2CJiJ36Emh",
+  "failure_message": null,
+  "failure_code": null,
+  "amount_refunded": 0,
+  "customer": null,
+  "invoice": null,
+  "description": null,
+  "dispute": null,
+  "metadata": {
+  },
+  "statement_description": null,
+  "receipt_email": null,
+  "receipt_number": null,
+  "shipping": null
+}
+```
 
 
 ### Contributing, or How you can make Payments better
