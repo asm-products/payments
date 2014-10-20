@@ -25,7 +25,7 @@ With that out of the way, you're going to need to create a couple of plans. This
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/plans \
   -H "content-type: application/json" \
-  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "Authorization: {PRODUCT_AUTHORIZATION_TOKEN}" \
   -d '{ "id": "product_plan", "name": "Product Plan",  "amount": 1000, "interval": "month" }'
 ```
 
@@ -43,7 +43,7 @@ You need to create a [Stripe Customer](https://stripe.com/docs/api/node#customer
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/customers \
   -H "content-type: application/json" \
-  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "Authorization: {PRODUCT_AUTHORIZATION_TOKEN}" \
   -d '{ "email": "an_awesome_customer@yourapp.com" }'
 ```
 
@@ -56,7 +56,7 @@ Finally, you're ready to create a subscription &mdash; this is how you get money
 ```
 curl -X POST https://payments.assembly.com/products/{PRODUCT_ID}/customers/{CUSTOMER_ID}/subscriptions \
   -H "content-type: application/json" \
-  -H "Authorization: {CORE_TEAM_MEMBER_TOKEN}" \
+  -H "Authorization: {PRODUCT_AUTHORIZATION_TOKEN}" \
   -d '{ "plan": "product_plan" }'
 ```
 
@@ -109,7 +109,7 @@ Response:
 ```
 201 Created
 {
-  "stripe_plan_id": "slug_product_plan"
+  "stripe_plan_id": "plan_id"
 }
 ```
 
@@ -196,7 +196,7 @@ Response (identical to the [response given by Stripe](https://stripe.com/docs/ap
 ```
 {
   "deleted": true,
-  "id": "slug_product_plan"
+  "id": "plan_id"
 }
 ```
 
@@ -308,7 +308,7 @@ Note that this returns the Payments API's version of your customers, not Stripe'
 Request:
 
 ```
-curl /products/{PRODUCT_ID}/custoemrs
+curl -H "Authorization: {AUTH_TOKEN}" /products/{PRODUCT_ID}/customers
 ```
 
 Response:

@@ -58,7 +58,7 @@ module.exports = {
 };
 
 function *createStripeSubscription(customer, body) {
-  return yield stripe.customers.createSubscription(customer, body.data);
+  return yield stripe.customers.createSubscription(customer, body);
 }
 
 function *destroyStripeSubscription(customer, subscription) {
