@@ -10,14 +10,14 @@ deploy:
   - provider: heroku
     strategy: git
     api_key:
-      secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
+      secure: Xx6hQ9Em7jcIs7gaMRwi7tCwjNpgiPqR3ja58NeQj16iKZBAOwEaeetno0d51VXSpw7HyY+Njo0EiXo6DK1nDE0oyQZweUE0nRBLK8omlluRogrfH2YgDEIIT0cBXa9lGGpOW+ZO/vMfZ3NXnnhkORV73k4afloMVBuWOrX0NXo=
     app: asm-payments
     on:
       repo: asm-products/payments
   - provider: heroku
     strategy: git
     api_key:
-      secure: I+DrLVgFUkvXohOrbsPFMXQ2FYfGWGpJS0sPSsHLgeCwYq3JQnVqiHam9CcBKRs87Cs8/+tXVGWI0Uiwt9dqIVCNyZqrQnUkOWdI+90SLV6VgMBeY7wrtjAzrZI+gS6AenwdVLARWNva5U8azOaJmy1E/6GElYzq8ANzDeOUmh0=
+      secure: opLvOBgeVvKYZQDctdWFadEbn0+xxT5FAflHgHqlQzGIR28CB95/i7UlsgvsqFEjxysBcl9TvkAcepV0g5Ca2xDqCPZFdmlRwaEOMGreNROWB/8Aq7IfPScrueRXk/kOvL/46QuggqnDf3itR75TH2q9oRAKDUHdXuXYcMWN5vo=
     app: asm-payments-sandbox
     on:
       repo: asm-products/payments
