@@ -9,6 +9,10 @@ var supertest = require('supertest');
 var Customer = require('../../../app/server/models/customer');
 
 describe('charges_controller', function() {
+  before(function(done) {
+    reset.dropDatabase(done);
+  });
+
   afterEach(function(done) {
     reset.dropDatabase(done);
   });
