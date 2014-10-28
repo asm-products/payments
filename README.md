@@ -12,6 +12,7 @@ Assembly payments: open and awesome
     - [Products](#products)
     - [Plans](#plans)
     - [Customers](#customers)
+    - [Charges](#charges)
     - [Subscriptions](#subscriptions)
 - [Contributing](#contributing)
 
@@ -34,7 +35,7 @@ You should provide _at least_ all of the above information in the request body, 
 ```
 201 Created
 {
-  "stripe_plan_id": "slug_product_plan"
+  "stripe_plan_id": "product_plan_id"
 }
 ```
 
@@ -82,7 +83,7 @@ Request:
 ```
 curl /products/{PRODUCT_ID}
 ```
-`{PRODUCT_ID}` Should be replaced with your products unique name, for example the `{PRODUCT_ID}` for Assembly Meta is `meta`.
+`{PRODUCT_ID}` Should be replaced with your product's uuid &mdash; if you need help getting this, just ask chuck@assembly.com. (I know it makes for an ugly URL, but it helps if you want to change your product's name in the future: no need to change it in multiple places.)
 
 Response:
 
@@ -453,6 +454,24 @@ Response:
   "id": "{CUSTOMER_ID}"
 }
 ```
+
+### Charges
+
+Charges are a resource defined on a product &mdash; `/products/:product/charges[/:charge]` &mdash; but they require a `customer` field in the body which is the Stripe ID of your customer.  You'll need to supply your authorization token in the `Authorization` header with each request.
+
+#### Create a charge
+
+Request:
+
+```
+curl -X POST /products/{PRODUCT_ID}/charges \
+    -H "Content-Type: application/json" \
+    -H "Authorization: {AUTH_TOKEN} \
+    -d '{ "customer": "{CUSTOMER_ID}", "amount": {amount in cents}, "currency": "usd" }'
+```
+
+Response (identical to [Stripe's response](https://stripe.com/docs/api#create_charge)).
+
 
 
 ### Subscriptions

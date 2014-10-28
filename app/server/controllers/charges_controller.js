@@ -9,6 +9,11 @@ module.exports = {
   // Stripe lets you create a charge on a card, we require a customer to be created
   create: [planPermissions, function *(next) {
     var body = this.request.body;
+
+    if (!body.currency) {
+      body.currenc = 'usd';
+    }
+
     var customer = yield Customer.findOne({ product_id: this.params.product, stripe_id: body.customer }).exec();
 
     if (!customer) {
