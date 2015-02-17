@@ -19,7 +19,7 @@ Assembly payments: open and awesome
 
 ### Quick Start, or What do I do now?
 
-If you're looking to implement Assembly Payments into you're app, you're probably a core team member, right? If not, you're gonna need to be: Assembly Payments requires a core team member's authentication token to validate most requests.
+If you're looking to implement Assembly Payments into your app, you're probably a core team member, right? If not, you're gonna need to be: Assembly Payments requires a core team member's authentication token to validate most requests.
 
 With that out of the way, you're going to need to create a couple of plans. This is mostly like [creating a plan on Stripe](https://stripe.com/docs/api/node#create_plan), except you create your plan through the Payments API. For example:
 
