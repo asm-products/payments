@@ -1,7 +1,7 @@
+var bodyParser = require('koa-bodyparser');
 var compress = require('koa-compress');
 var dotenv = require('dotenv');
 var favicon = require('koa-favicon');
-var jsonBody = require('koa-parse-json');
 var koa = require('koa');
 var locals = require('koa-locals');
 var logger = require('koa-logger');
@@ -24,7 +24,7 @@ app.keys = [process.env.SESSION_SECRET];
 
 app.use(session());
 app.use(favicon(path.resolve(__dirname, '../..', 'public/favicon.ico')));
-app.use(jsonBody());
+app.use(bodyParser());
 app.use(router(app));
 app.use(serve(path.resolve(__dirname, '../..', 'public')));
 app.use(serve(path.resolve(__dirname, '../..', 'node_modules/jquery/dist')));

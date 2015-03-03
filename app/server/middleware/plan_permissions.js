@@ -4,6 +4,11 @@ var handleError = require('../lib/error');
 module.exports = function *planPermissions(next) {
   var slug = this.params.product;
   var token = this.get('Authorization');
+
+  if (token && token.indexOf('Bearer ') === 0) {
+    token = token.substr('Bearer '.length);
+  }
+
   var result = yield request.get({
     uri: process.env.ASSEMBLY_API + '/products/' + slug + '/authorization?token=' + token,
     headers: {
